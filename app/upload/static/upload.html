@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="dropzone.css" type="text/css" />
+        <script src="jquery.js"></script>
+        <script src="dropzone.js"></script>
+        <script src="image1.js"></script>
+        <script src="vue.js"></script>
+        <script type="text/javascript">
+            Dropzone.options.dropzone = {
+                acceptedFiles: 'image/jpeg,image/png',
+                init: function() {
+                    this.on('error', function(file, text_response) {
+                        const response = JSON.parse(text_response);
+                        var errorMessage = response.title;
+                        $(file.previewElement).find('.dz-error-message').text(errorMessage);
+                    });
+                },
+            };
+        </script>
+        <style type="text/css">
+            body {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                margin: 0;
+                padding: 1em;
+            }
+            div.orna {
+                background-repeat: no-repeat;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
+            div#topleft {
+                background-image: url('topleft.png');
+                top: 0;
+                left: 4em;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 style="text-align: right; margin: 2em;">Bilder Upload<br/>Signaturerstellung</h1>
+        <form action="/lise/upload" class="dropzone" id="dropzone">
+            <div class="dz-message" data-dz-message><span>Bilder hier ablegen oder Fläche klicken</span></div>
+        </form>
+        <div class="orna" id="topleft"></div>
+        <div id="date">
+            Enter date
+            <br>
+            <input v-model="date1">
+            <br>
+            <button onclick="alert('submitted')" :disabled="date1.length < 2" >
+                Submit
+            </button>
+        </div>
+        <script type="text/javascript">
+            new Vue({
+                el: '#date',
+                data: {
+                    date1: ''
+                }
+            })
+        </script>
+        <script src="imageview_updated.html"></script>
+    </body>
+</html>
