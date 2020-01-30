@@ -10,10 +10,10 @@ class Concernee(db.Model):
     
     __tablename__ = 'db_concernee'
 
-    startdate = db.Column('name', db.String(10), unique=True, nullable=True)
-    enddate = db.Column('name', db.String(10), unique=True, nullable=True)
-    text = db.Column('short', db.String(100), unique=False, nullable=True)
-    path = db.Column('short', db.String(100), unique=True, nullable=True)
+    startdate = db.Column('startdate', db.String(10), unique=True, nullable=True)
+    enddate = db.Column('enddate', db.String(10), unique=True, nullable=True)
+    text = db.Column('text', db.String(255), unique=False, nullable=True)
+    path = db.Column('path', db.String(255), unique=True, nullable=True)
 
 
 class ConcerneeSchema(ma.ModelSchema):

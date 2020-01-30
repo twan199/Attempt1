@@ -17,14 +17,8 @@ import errno
 
 upload = Blueprint('upload', __name__, static_folder='static')
 
-@upload.route('/upload', methods=['POST'])
-def upload_image():
-
-    images_path = os.path.join(app.instance_path, 'images')
-    os.makedirs(images_path, exist_ok=True)
-
-    results = []
-
+@upload.route('/upload_data', methods=['POST'])
+def upload_data():
     schema = ConcerneeSchema()
     try:
         concernee = schema.load(request.json)
@@ -32,6 +26,35 @@ def upload_image():
     except ValidationError as ve:
         return rfc7807_response(title='Input validation failed', blockers=ve.messages)
 
+    db.session.add(concernee)
+
+    try:
+        db.session.commit()
+    except SQLAlchemyError as sqlae:
+        # Failing a unique constraint will result in an integrity error
+        if isinstance(sqlae, IntegrityError):
+            return rfc7807_response(title='Conflict while creating resource', code=409)
+
+        # Something else went wrong, bail out
+        return rfc7807_response(title='Internal error while creating resource', code=500)
+    
+
+    response = Response()
+    response. status_code = 201  # Created
+    response.mimetype = 'application/json'
+    response.location = request.path + '/' + concernee.sk
+    response.data = schema.dumps(concernee)
+
+    return response
+
+
+@upload.route('/upload', methods=['POST'])
+def upload_image():
+
+    images_path = os.path.join(app.instance_path, 'images')
+    os.makedirs(images_path, exist_ok=True)
+
+    results = []
     # For the moment we only allow one image per upload
     if len(request.files) != 1:
         response = Response()
