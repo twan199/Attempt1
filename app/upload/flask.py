@@ -27,7 +27,8 @@ def upload_data():
         return rfc7807_response(title='Input validation failed', blockers=ve.messages)
 
     db.session.add(concernee)
-
+    abc = Concernee(startdate='1212', enddate='123', text='dsdadas', path='234234')
+    db.session.add(abc)
     try:
         db.session.commit()
     except SQLAlchemyError as sqlae:
@@ -37,8 +38,8 @@ def upload_data():
 
         # Something else went wrong, bail out
         return rfc7807_response(title='Internal error while creating resource', code=500)
-    
 
+    print(Concernee.query.all())
     response = Response()
     response. status_code = 201  # Created
     response.mimetype = 'application/json'
