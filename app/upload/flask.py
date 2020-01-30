@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, request, Response, json, render_template
+from flask import Blueprint, abort, request, Response, json, render_template, jsonify
 from flask import current_app as app
 from app.upload.imageprocessor import processor2
 from app import db
@@ -48,6 +48,9 @@ def upload_data():
 
     return response
 
+@upload.route('/api', methods=['GET'])
+def api_run():
+    return '''<h1>Distant Reading Archive</h1><p>A prototype API for distant reading of science fiction novels.</p>'''
 
 @upload.route('/upload', methods=['POST'])
 def upload_image():
