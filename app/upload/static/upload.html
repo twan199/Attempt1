@@ -44,11 +44,15 @@
         </form>
         <div class="orna" id="topleft"></div>
         <div id="date">
-            Enter date
+            Enter start date <input v-model="startdate" placeholder="z.B. 25.01.2019">
             <br>
-            <input v-model="date1">
+            Enter end date &nbsp;<input v-model="enddate" placeholder="z.B. 18.05.2020">
             <br>
-            <button onclick="alert('submitted')" :disabled="date1.length < 2" >
+            Additional text 
+            <br>
+            <textarea v-model="text" placeholder="add extra text"></textarea>
+            <br>
+            <button onclick="alert('submitted')" :disabled="startdate.length < 2">
                 Submit
             </button>
         </div>
@@ -56,9 +60,11 @@
             new Vue({
                 el: '#date',
                 data: {
-                    date1: ''
+                    startdate: ''
+                    enddate: ''
+                    text: ''
                 }
-            })
+            })+
         </script>
         <script src="imageview_updated.html"></script>
     </body>

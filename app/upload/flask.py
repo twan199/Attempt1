@@ -26,6 +26,9 @@ def upload_data():
     except ValidationError as ve:
         return rfc7807_response(title='Input validation failed', blockers=ve.messages)
 
+    concernee.pk= None
+    concernee.sk = guauoid_generate()
+    
     db.session.add(concernee)
     abc = Concernee(startdate='1212', enddate='123', text='dsdadas', path='234234')
     db.session.add(abc)
