@@ -44,6 +44,20 @@
         </form>
         <div class="orna" id="topleft"></div>
         <div id="date">
+            <form method="POST">
+                <input type="text" id="startdate" v.model.lazy.trim="startdate" placeholder="z.B. 25.01.2019"/>
+                <input type="submit" />
+            </form>
+        </div>
+        <script type="text/javascript">
+            a = new Vue({
+                el: '#date',
+                data: {
+                    startdate: ''
+                }
+            })
+        </script>
+            <!--
             Enter start date <input v-model="startdate" placeholder="z.B. 25.01.2019">
             <br>
             Enter end date &nbsp;<input v-model="enddate" placeholder="z.B. 18.05.2020">
@@ -55,6 +69,7 @@
             <button onclick="alert('submitted')" :disabled="startdate.length < 2">
                 Submit
             </button>
+            
         </div>
         <script type="text/javascript">
             new Vue({
@@ -64,8 +79,9 @@
                     enddate: ''
                     text: ''
                 }
-            })+
+            })
         </script>
+        !-->
         <script src="imageview_updated.html"></script>
     </body>
 </html>
