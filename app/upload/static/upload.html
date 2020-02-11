@@ -44,7 +44,7 @@
         </form>
         <div class="orna" id="topleft"></div>
         <div id="date">
-            <form method="POST">
+            <form action="{{ url_for('concernee') }}" method="POST">
                 <input type="text" id="startdate" v.model.lazy.trim="startdate" placeholder="z.B. 25.01.2019"/>
                 <input type="submit" />
             </form>

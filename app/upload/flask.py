@@ -17,7 +17,40 @@ import errno
 
 upload = Blueprint('upload', __name__, static_folder='static')
 
-@upload.route('/upload_data', methods=['POST'])
+@upload.route('/concernees', methods=['GET'])
+def list_concernees():
+
+    # Pagination
+    page = request.args.get(key='page', default=1, type=int)
+    per_page = request.args.get(key='per_page', default=25, type=int)
+
+    if per_page > 100:
+        per_page = 100
+
+    # Sorting
+    sort_field_name = request.args.get(key='sort', default='name', type=str)
+    sort_direction = request.args.get(key='order', default='asc', type=str)
+
+    try:
+        sort_field = getattr(Concernee, sort_field_name)
+    except AttributeError:
+        sort_field = Concernee.name
+
+    if sort_direction.lower() == 'desc':
+        sort_field = sort_field.desc()
+    
+    # Query
+    concernees = db.session \
+        .query(Concernee) \
+        .order_by(sort_field) \
+        .paginate(page, per_page, True) \
+        .items
+
+    schema = ConcerneeSchema(many=True)
+
+    return schema.jsonify(concernees)
+
+@upload.route('/concernees', methods=['POST'])
 def upload_data():
     schema = ConcerneeSchema()
     try:
