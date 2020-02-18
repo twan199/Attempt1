@@ -8,9 +8,9 @@ from sqlalchemy import create_engine
 Base = declarative_base()
  
 class ImagesData(Base):
-    __tablename__ = 'db_imagesdata'
+    __tablename__ = 'db_concernee'
     
-    id = Column(Integer, primary_key=True)
+    pk = Column(Integer, primary_key=True)
     startdate = Column('startdate', String(10), unique=True, nullable=True)
     enddate = Column('enddate', String(10), unique=True, nullable=True)
     text = Column('text', String(255), unique=False, nullable=True)

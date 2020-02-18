@@ -21,11 +21,12 @@ def create_app():
     configuration_object = import_string(
         configuration_class_name or 'app.defaults.ProductionConfig')()
 
-    app.config.from_object(configuration_object)
+    #app.config.from_object(configuration_object)
 
     # Second, apply instance configuration,
     # this file is NOT in version control for obvious reasons.
-    app.config.from_pyfile('config.py')
+    #app.config.from_pyfile('config.py')
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sqlalchemy_database.db"
 
     try:
         os.makedirs(app.instance_path)
