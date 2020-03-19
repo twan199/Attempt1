@@ -1,0 +1,2 @@
+curl -i -X POST -H "Content-Type: application/json" -d '{"username":"migu12el","email":"python21"}' http://localhost:5000/user   
+curl -i -X GET http://localhost:5000/user/1
